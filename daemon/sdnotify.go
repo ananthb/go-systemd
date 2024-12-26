@@ -1,5 +1,3 @@
-//go:generate go run golang.org/x/tools/cmd/stringer@latest -linecomment -type=NotifyState
-
 // Copyright 2014 Docker, Inc.
 // Copyright 2015-2018 CoreOS, Inc.
 //
@@ -28,25 +26,23 @@ import (
 	"os"
 )
 
-type NotifyState int
-
 const (
 	// SdNotifyReady tells the service manager that service startup is finished
 	// or the service finished loading its configuration.
-	SdNotifyReady NotifyState = iota // "READY=1"
+	SdNotifyReady = "READY=1"
 
 	// SdNotifyStopping tells the service manager that the service is beginning
 	// its shutdown.
-	SdNotifyStopping // "STOPPING=1"
+	SdNotifyStopping = "STOPPING=1"
 
 	// SdNotifyReloading tells the service manager that this service is
 	// reloading its configuration. Note that you must call SdNotifyReady when
 	// it completed reloading.
-	SdNotifyReloading // "RELOADING=1"
+	SdNotifyReloading = "RELOADING=1"
 
 	// SdNotifyWatchdog tells the service manager to update the watchdog
 	// timestamp for the service.
-	SdNotifyWatchdog // "WATCHDOG=1"
+	SdNotifyWatchdog = "WATCHDOG=1"
 )
 
 // SdNotify sends a message to the init daemon. It is common to ignore the error.
@@ -57,7 +53,7 @@ const (
 // (false, nil) - notification not supported (i.e. NOTIFY_SOCKET is unset)
 // (false, err) - notification supported, but failure happened (e.g. error connecting to NOTIFY_SOCKET or while sending data)
 // (true, nil) - notification supported, data has been sent
-func SdNotify(unsetEnvironment bool, state NotifyState) (bool, error) {
+func SdNotify(unsetEnvironment bool, state string) (bool, error) {
 	socketAddr := &net.UnixAddr{
 		Name: os.Getenv("NOTIFY_SOCKET"),
 		Net:  "unixgram",
