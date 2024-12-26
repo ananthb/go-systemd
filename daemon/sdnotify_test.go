@@ -24,7 +24,6 @@ import (
 
 // TestSdNotify
 func TestSdNotify(t *testing.T) {
-
 	testDir, e := ioutil.TempDir("/tmp/", "test-")
 	if e != nil {
 		panic(e)
