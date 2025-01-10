@@ -77,7 +77,7 @@ func SdNotify(unsetEnvironment bool, state string) (bool, error) {
 	}
 	defer conn.Close()
 
-	if _, err = conn.Write([]byte(state.String())); err != nil {
+	if _, err = conn.Write([]byte(state)); err != nil {
 		return false, err
 	}
 	return true, nil
